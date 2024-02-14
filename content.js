@@ -124,4 +124,48 @@ function convertSchoolScheduleInTable() {
     });
 }
 
-window.addEventListener('load', convertSchoolScheduleInTable);
+function getNameOfSubjects() {
+    const h4Elements = document.querySelectorAll('h4');
+    const subjectsList = [];
+
+    h4Elements.forEach(element => {
+        subjectsList.push(element.textContent.trim());
+    });
+
+
+    const courseInfoDict = {};
+
+    subjectsList.forEach(course => {
+        const regex = /^(\d+º Período \| (GRAD\.\d+) - (.+?) - Graduação \[\d+ h\/\d+ Aulas\])$/;
+        const match = course.match(regex);
+
+        if (match) {
+            const [, , courseKey, courseName] = match;
+            courseInfoDict[courseKey] = courseName;
+        }
+    });
+
+    return courseInfoDict;
+}
+
+function updateRequestedSubjectsTableNames() {
+    const table = document.querySelector('.table-responsive table');
+    const subjectCodes = getNameOfSubjects();
+
+    if (table) {
+        const cells = table.querySelectorAll('.text-center');
+
+        cells.forEach(cell => {
+            const subjectCode = cell.textContent.trim();
+            if (subjectCode && subjectCodes.hasOwnProperty(subjectCode)) {
+                cell.textContent = subjectCodes[subjectCode];
+            }
+        });
+    }
+}
+
+
+window.addEventListener('load', () => {
+    convertSchoolScheduleInTable();
+    updateRequestedSubjectsTableNames();
+});
