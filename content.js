@@ -55,9 +55,12 @@ function convertSchoolSchedule(hour) {
         consolidateTimeSlots(hourNumberArray, timeSlots[shift], hourArray);
 
         hoursArrayComplete.push(hourArray.join(' '));
+
+        return hoursArrayComplete.join(' ');
     }
 
-    return hoursArrayComplete.join(' ');
+    return hour;
+
 }
 
 function consolidateTimeSlots(timeArray, timeSlots, resultArray) {
