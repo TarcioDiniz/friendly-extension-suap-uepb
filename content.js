@@ -49,7 +49,7 @@ function convertSchoolSchedule(hour) {
             M: hoursMorning,
             T: hoursAfternoon,
             N: hoursNight,
-            V: hoursMorning,
+            V: hoursAfternoon,
         };
 
         consolidateTimeSlots(hourNumberArray, timeSlots[shift], hourArray);
